@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="75.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.Buttons">
+    <JFXButton fx:id="log" alignment="CENTER" onAction="#handleLogBtn" prefHeight="48.0" prefWidth="60.0" style="-fx-background-color: #642CA900;" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="63.0">
+        <graphic>
+            <FontAwesomeIconView glyphName="ALIGN_JUSTIFY" size="20" />
+        </graphic>
+    </JFXButton>
+    <JFXButton fx:id="add" alignment="CENTER" onAction="#handleAddBtn" prefHeight="48.0" prefWidth="60.0" style="-fx-background-color: #642CA900;" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="15.0">
+        <graphic>
+            <FontAwesomeIconView glyphName="PLUS" size="20" />
+        </graphic>
+    </JFXButton>
+    <JFXButton fx:id="settings" alignment="CENTER" onAction="#handleSettingsBtn" prefHeight="48.0" prefWidth="60.0" style="-fx-background-color: #642CA900;" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0">
+        <graphic>
+            <MaterialDesignIconView glyphName="SETTINGS" size="15" />
+        </graphic>
+    </JFXButton>
+</AnchorPane>
