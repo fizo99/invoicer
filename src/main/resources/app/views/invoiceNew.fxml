@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXDatePicker?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.app.controllers.New">
+   <children>
+      <VBox layoutX="-3.0" layoutY="-1.0" prefHeight="759.0" prefWidth="1024.0" style="-fx-background-size: 100%;" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="50.0">
+         <children>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <VBox maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity">
+                     <children>
+                        <VBox fillWidth="false">
+                           <children>
+                              <JFXDatePicker promptText="Data" />
+                              <JFXTextField promptText="nr">
+                                 <VBox.margin>
+                                    <Insets top="10.0" />
+                                 </VBox.margin>
+                              </JFXTextField>
+                              <JFXComboBox fx:id="invoiceType" promptText="Faktura">
+                                 <VBox.margin>
+                                    <Insets top="10.0" />
+                                 </VBox.margin>
+                              </JFXComboBox>
+                           </children>
+                        </VBox>
+                        <HBox>
+                           <children>
+                              <VBox fillWidth="false">
+                                 <children>
+                                    <Label prefHeight="31.0" prefWidth="91.0" text="Kupujący">
+                                       <font>
+                                          <Font name="System Bold" size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <JFXTextField fx:id="formNIP" promptText="NIP">
+                                       <VBox.margin>
+                                          <Insets top="10.0" />
+                                       </VBox.margin>
+                                    </JFXTextField>
+                                    <JFXTextField fx:id="formCompanyName" promptText="Nazwa firmy">
+                                       <VBox.margin>
+                                          <Insets top="10.0" />
+                                       </VBox.margin>
+                                    </JFXTextField>
+                                    <JFXTextField fx:id="formFullName" promptText="Imię i nazwisko">
+                                       <VBox.margin>
+                                          <Insets top="10.0" />
+                                       </VBox.margin>
+                                    </JFXTextField>
+                                    <JFXTextField fx:id="formTown" promptText="Miejscowość">
+                                       <VBox.margin>
+                                          <Insets top="10.0" />
+                                       </VBox.margin>
+                                    </JFXTextField>
+                                    <JFXTextField fx:id="formStreet" promptText="Ulica i numer">
+                                       <VBox.margin>
+                                          <Insets top="10.0" />
+                                       </VBox.margin>
+                                    </JFXTextField>
+                                    <JFXTextField fx:id="formZIPCode" promptText="Kod pocztowy">
+                                       <VBox.margin>
+                                          <Insets top="10.0" />
+                                       </VBox.margin>
+                                    </JFXTextField>
+                                 </children>
+                              </VBox>
+                              <JFXButton fx:id="buttonFind" alignment="CENTER" contentDisplay="CENTER" style="-fx-background-color: #4D66CC; -fx-text-fill: white;" text="Szukaj">
+                                 <HBox.margin>
+                                    <Insets left="10.0" top="40.0" />
+                                 </HBox.margin>
+                              </JFXButton>
+                           </children>
+                           <VBox.margin>
+                              <Insets top="50.0" />
+                           </VBox.margin>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+            <TableView id="items" fx:id="items" fixedCellSize="1.0">
+               <columns>
+                  <TableColumn fx:id="tab_LP" editable="false" minWidth="0.0" prefWidth="48.0" text="Lp." />
+                  <TableColumn fx:id="tab_serviceName" prefWidth="290.0" text="Nazwa towaru" />
+                  <TableColumn fx:id="tab_unit" prefWidth="63.0" text="J.m." />
+                  <TableColumn fx:id="tab_quantity" prefWidth="66.0" text="Ilosc" />
+                  <TableColumn fx:id="tab_nettoPrice" prefWidth="143.0" text="Cena netto" />
+                  <TableColumn fx:id="tab_vatPercent" prefWidth="79.0" text="VAT [%]" />
+                  <TableColumn fx:id="tab_vatPrice" editable="false" minWidth="0.0" prefWidth="149.0" text="Kwota VAT" />
+                  <TableColumn fx:id="tab_bruttoPrice" prefWidth="185.0" text="Wartość brutto" />
+               </columns>
+               <VBox.margin>
+                  <Insets top="100.0" />
+               </VBox.margin>
+            </TableView>
+            <HBox alignment="TOP_RIGHT" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <JFXButton fx:id="tableButtonAdd" buttonType="RAISED" style="-fx-background-color: #4D66CC; -fx-text-fill: white;" text="Dodaj">
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                  </JFXButton>
+                  <JFXButton fx:id="tableButtonRemove" buttonType="RAISED" style="-fx-background-color: #4D66CC; -fx-text-fill: white;" text="Usun" />
+               </children>
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

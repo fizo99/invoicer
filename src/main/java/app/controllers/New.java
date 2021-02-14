@@ -1,7 +1,8 @@
-package sample.controller;
+package main.java.app.controllers;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
+import com.jfoenix.controls.JFXTextField;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -9,10 +10,14 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.util.StringConverter;
-import sample.model.Service;
+import main.java.app.util.FetchNIP;
+import main.java.app.models.Service;
+import main.java.app.models.Subject;
+import main.java.app.util.StringConverterUtil;
 
+import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.*;
 
 public class New implements Initializable {
@@ -45,7 +50,26 @@ public class New implements Initializable {
     @FXML
     private JFXButton tableButtonRemove;
 
-    private ObservableList<Service> data = FXCollections.observableArrayList(new Service());
+    @FXML
+    private JFXButton buttonFind;
+
+    @FXML
+    private JFXTextField formNIP;
+    @FXML
+    private JFXTextField formFullName;
+    @FXML
+    private JFXTextField formTown;
+    @FXML
+    private JFXTextField formStreet;
+    @FXML
+    private JFXTextField formZIPCode;
+    @FXML
+    private JFXTextField formCompanyName;
+
+
+
+
+    private ObservableList<Service> data = FXCollections.observableArrayList();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -57,12 +81,16 @@ public class New implements Initializable {
 
     private void prepareTable(){
         items.setEditable(true);
+        //wyzerowac counter ID
+        data.add(new Service());
+        items.setItems(data);
+        items.setFixedCellSize(30.0);
 
         tab_LP.setCellValueFactory(new PropertyValueFactory<>("LP"));
-        tab_LP.setCellFactory(TextFieldTableCell.forTableColumn(stringToInt()));
+        tab_LP.setCellFactory(TextFieldTableCell.forTableColumn(StringConverterUtil.stringToInt()));
 
         tab_vatPrice.setCellValueFactory(new PropertyValueFactory<>("vatPrice"));
-        tab_vatPrice.setCellFactory(TextFieldTableCell.forTableColumn(stringToFloat()));
+        tab_vatPrice.setCellFactory(TextFieldTableCell.forTableColumn(StringConverterUtil.stringToFloat()));
 
         //service name
         tab_serviceName.setCellValueFactory(new PropertyValueFactory<>("serviceName"));
@@ -77,7 +105,7 @@ public class New implements Initializable {
         );
 
         tab_quantity.setCellValueFactory(new PropertyValueFactory<>("quantity"));
-        tab_quantity.setCellFactory(TextFieldTableCell.forTableColumn(stringToInt()));
+        tab_quantity.setCellFactory(TextFieldTableCell.forTableColumn(StringConverterUtil.stringToInt()));
         tab_quantity.setOnEditCommit(
                 t ->  {
                     t.getTableView().getItems()
@@ -99,7 +127,7 @@ public class New implements Initializable {
 //
 
         tab_vatPercent.setCellValueFactory(new PropertyValueFactory<>("vatPercent"));
-        tab_vatPercent.setCellFactory(TextFieldTableCell.forTableColumn(stringToInt()));
+        tab_vatPercent.setCellFactory(TextFieldTableCell.forTableColumn(StringConverterUtil.stringToInt()));
         tab_vatPercent.setOnEditCommit(
                 t ->  {
                     t.getTableView().getItems()
@@ -110,7 +138,7 @@ public class New implements Initializable {
         );
 
         tab_nettoPrice.setCellValueFactory(new PropertyValueFactory<>("nettoPrice"));
-        tab_nettoPrice.setCellFactory(TextFieldTableCell.forTableColumn(stringToFloat()));
+        tab_nettoPrice.setCellFactory(TextFieldTableCell.forTableColumn(StringConverterUtil.stringToFloat()));
         tab_nettoPrice.setOnEditCommit(
                 t -> {
                     Service service = t.getTableView().getItems().get(t.getTablePosition().getRow());
@@ -123,7 +151,7 @@ public class New implements Initializable {
         );
 
         tab_bruttoPrice.setCellValueFactory(new PropertyValueFactory<>("bruttoPrice"));
-        tab_bruttoPrice.setCellFactory(TextFieldTableCell.forTableColumn(stringToFloat()));
+        tab_bruttoPrice.setCellFactory(TextFieldTableCell.forTableColumn(StringConverterUtil.stringToFloat()));
         tab_bruttoPrice.setOnEditCommit(
                 t -> {
                     Service service = t.getTableView().getItems().get(t.getTablePosition().getRow());
@@ -141,9 +169,28 @@ public class New implements Initializable {
             data.remove(data.size() - 1);
             Service.decrementCounter();
         });
+        buttonFind.setOnAction(e -> {
+            LocalDate date = LocalDate.now();
+            String NIP = formNIP.getText();
+            try {
+                Subject subject = FetchNIP.makeRequest(NIP,date.toString());
+                StringBuilder fullName = new StringBuilder(subject.getName()).append(" ").append(subject.getSurname());
+                StringBuilder fullStreet = new StringBuilder(subject.getStreetName()).append(" ").append(subject.getStreetNumber());
+
+                formNIP.setText(subject.getNIP());
+                formFullName.setText(fullName.toString());
+                formTown.setText(subject.getTown());
+                formStreet.setText(fullStreet.toString());
+                formZIPCode.setText(subject.getZIPcode());
+                formCompanyName.setText(subject.getCompanyName());
+
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
+        });
 
 
-        tab_bruttoPrice.setCellFactory(TextFieldTableCell.forTableColumn(stringToFloat()));
+        tab_bruttoPrice.setCellFactory(TextFieldTableCell.forTableColumn(StringConverterUtil.stringToFloat()));
         tab_bruttoPrice.setOnEditStart(
                 t -> {
                     Service service = t.getTableView().getItems().get(t.getTablePosition().getRow());
@@ -157,28 +204,5 @@ public class New implements Initializable {
 
     }
 
-    private StringConverter<Integer> stringToInt(){
-        return new StringConverter<Integer>() {
-            @Override
-            public String toString(Integer object) {
-                return object.toString();
-            }
-            @Override
-            public Integer fromString(String string) {
-                return Integer.parseInt(string);
-            }
-        };
-    }
-    private StringConverter<Float> stringToFloat(){
-        return new StringConverter<Float>() {
-            @Override
-            public String toString(Float object) {
-                return object.toString();
-            }
-            @Override
-            public Float fromString(String string) {
-                return Float.parseFloat(string);
-            }
-        };
-    }
+
 }

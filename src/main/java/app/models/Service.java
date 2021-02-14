@@ -1,11 +1,11 @@
-package sample.model;
+package main.java.app.models;
 
 public class Service {
     private String serviceName = "";
     private String unit = "szt.";
 
     private static int counter = 1;
-    private int LP = 1;
+    private int LP;
 
     private int quantity = 1;
     private int vatPercent = 23;
