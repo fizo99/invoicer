@@ -15,7 +15,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("resources/app/views/invoiceNew.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("../../resources/app/views/creatorView.fxml"));
 
         final double initialSceneWidth = 720;
         final double initialSceneHeight = 640;
@@ -24,6 +24,8 @@ public class Main extends Application {
 
         this.decorationWidth = initialSceneWidth - scene.getWidth();
         this.decorationHeight = initialSceneHeight - scene.getHeight();
+
+        //scene.getStylesheets().add(getClass().getResource("../../resources/app/css/creatorView.css").toExternalForm());
 
         stage.setTitle("Invoicer");
         stage.setMaximized(true);

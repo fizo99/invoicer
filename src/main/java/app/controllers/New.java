@@ -58,18 +58,9 @@ public class New implements Initializable {
     @FXML
     private JFXTextField formFullName;
     @FXML
-    private JFXTextField formTown;
-    @FXML
-    private JFXTextField formStreet;
-    @FXML
-    private JFXTextField formZIPCode;
-    @FXML
-    private JFXTextField formCompanyName;
+    private JFXTextField formFullAddress;
 
-
-
-
-    private ObservableList<Service> data = FXCollections.observableArrayList();
+    private ObservableList<Service> data = FXCollections.observableArrayList(new Service());
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -81,10 +72,7 @@ public class New implements Initializable {
 
     private void prepareTable(){
         items.setEditable(true);
-        //wyzerowac counter ID
-        data.add(new Service());
         items.setItems(data);
-        items.setFixedCellSize(30.0);
 
         tab_LP.setCellValueFactory(new PropertyValueFactory<>("LP"));
         tab_LP.setCellFactory(TextFieldTableCell.forTableColumn(StringConverterUtil.stringToInt()));
@@ -172,20 +160,16 @@ public class New implements Initializable {
         buttonFind.setOnAction(e -> {
             LocalDate date = LocalDate.now();
             String NIP = formNIP.getText();
+            System.out.println(NIP + " " + date);
             try {
                 Subject subject = FetchNIP.makeRequest(NIP,date.toString());
-                StringBuilder fullName = new StringBuilder(subject.getName()).append(" ").append(subject.getSurname());
-                StringBuilder fullStreet = new StringBuilder(subject.getStreetName()).append(" ").append(subject.getStreetNumber());
 
                 formNIP.setText(subject.getNIP());
-                formFullName.setText(fullName.toString());
-                formTown.setText(subject.getTown());
-                formStreet.setText(fullStreet.toString());
-                formZIPCode.setText(subject.getZIPcode());
-                formCompanyName.setText(subject.getCompanyName());
-
-            } catch (IOException ioException) {
-                ioException.printStackTrace();
+                formFullName.setText(subject.getFullName());
+                formFullAddress.setText(subject.getFullAddress());
+            } catch (Exception exc) {
+                System.out.println(exc.getMessage());
+                //exc.printStackTrace();
             }
         });
 

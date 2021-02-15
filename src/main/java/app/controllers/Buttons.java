@@ -11,21 +11,21 @@ import java.io.IOException;
 public class Buttons {
     public void handleLogBtn(ActionEvent actionEvent) {
         try{
-            changeRoot((Node) actionEvent.getSource(),"../view/invoiceLog.fxml");
+            changeRoot((Node) actionEvent.getSource(),"../../../resources/app/views/logView.fxml");
         }catch(Exception e) {
             System.out.println(e.getMessage());
         }
     }
     public void handleAddBtn(ActionEvent actionEvent) {
         try{
-            changeRoot((Node) actionEvent.getSource(),"../view/invoiceNew.fxml");
+            changeRoot((Node) actionEvent.getSource(),"../../../resources/app/views/creatorView.fxml");
         }catch(Exception e){
             System.out.println(e.getMessage());
         }
     }
     public void handleSettingsBtn(ActionEvent actionEvent) {
         try{
-            changeRoot((Node) actionEvent.getSource(),"../view/invoiceSettings.fxml");
+            changeRoot((Node) actionEvent.getSource(),"../../../resources/app/views/settingsView.fxml");
         }catch(Exception e){
             System.out.println(e.getMessage());
         }
