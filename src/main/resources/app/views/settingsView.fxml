@@ -1,9 +1,95 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" stylesheets="@../css/globalStyles.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.app.controllers.SettingsController">
    <children>
-      <fx:include source="buttons.fxml" />
+      <VBox layoutX="-3.0" layoutY="-1.0" prefHeight="759.0" prefWidth="1024.0" style="-fx-background-size: 100%;" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="50.0">
+         <children>
+            <HBox>
+               <children>
+                  <VBox HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label text="Twoje dane">
+                           <font>
+                              <Font name="System Bold" size="48.0" />
+                           </font>
+                        </Label>
+                     </children></VBox>
+                  <fx:include source="buttons.fxml" />
+               </children>
+            </HBox>
+            <HBox>
+               <children>
+                  <VBox fillWidth="false">
+                     <children>
+                        <JFXTextField fx:id="userFullName" minWidth="400.0" promptText="NIP" text="Nazwa">
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin>
+                        </JFXTextField>
+                        <JFXTextField fx:id="userFullAddress" minWidth="400.0" promptText="Nazwa" text="Adres">
+                           <VBox.margin>
+                              <Insets top="15.0" />
+                           </VBox.margin>
+                        </JFXTextField>
+                        <JFXTextField fx:id="userNIP" minWidth="400.0" promptText="Adres" text="NIP">
+                           <VBox.margin>
+                              <Insets top="15.0" />
+                           </VBox.margin>
+                        </JFXTextField>
+                        <JFXTextField fx:id="userPhoneNumber" minWidth="400.0" promptText="Adres" text="Numer telefonu">
+                           <VBox.margin>
+                              <Insets top="15.0" />
+                           </VBox.margin>
+                        </JFXTextField>
+                        <JFXTextField fx:id="userEmail" minWidth="400.0" promptText="Adres" text="Email">
+                           <VBox.margin>
+                              <Insets top="15.0" />
+                           </VBox.margin>
+                        </JFXTextField>
+                        <JFXTextField fx:id="userBDO" minWidth="400.0" promptText="Adres" text="BDO">
+                           <VBox.margin>
+                              <Insets top="15.0" />
+                           </VBox.margin>
+                        </JFXTextField>
+                        <JFXTextField fx:id="userGTU" minWidth="400.0" promptText="Adres" text="GTU">
+                           <VBox.margin>
+                              <Insets top="15.0" />
+                           </VBox.margin>
+                        </JFXTextField>
+                        <JFXTextField fx:id="userAccountNumber" minWidth="400.0" promptText="Adres" text="Numer konta bankowego">
+                           <VBox.margin>
+                              <Insets top="15.0" />
+                           </VBox.margin>
+                        </JFXTextField>
+                        <HBox alignment="CENTER" prefHeight="31.0" prefWidth="398.0">
+                           <VBox.margin>
+                              <Insets top="35.0" />
+                           </VBox.margin>
+                           <children>
+                              <Text fx:id="errorMsg" strokeType="OUTSIDE" strokeWidth="0.0" />
+                              <Pane HBox.hgrow="ALWAYS" />
+                              <JFXButton fx:id="buttonSettingsSave" alignment="CENTER" contentDisplay="CENTER" text="Zapisz" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </children>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </HBox>
+         </children>
+      </VBox>
    </children>
 </AnchorPane>

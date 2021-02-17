@@ -22,6 +22,20 @@
                <children>
                   <VBox HBox.hgrow="ALWAYS">
                      <children>
+                        <Label text="Nowa faktura">
+                           <font>
+                              <Font name="System Bold" size="48.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+                  <fx:include source="buttons.fxml" />
+               </children>
+            </HBox>
+            <HBox>
+               <children>
+                  <VBox HBox.hgrow="ALWAYS">
+                     <children>
                         <VBox fillWidth="false">
                            <children>
                               <JFXDatePicker promptText="Data" />
@@ -76,7 +90,6 @@
                      </children>
                   </VBox>
                   <Region prefHeight="200.0" prefWidth="200.0" />
-                  <fx:include source="buttons.fxml" />
                </children>
             </HBox>
             <TableView id="items" fx:id="items" editable="true" fixedCellSize="15.0">
