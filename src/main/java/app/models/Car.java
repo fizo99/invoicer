@@ -42,8 +42,6 @@ public class Car {
 
     public void setNettoPrice(Float nettoPrice) {
         this.nettoPrice = nettoPrice;
-        this.bruttoPrice = nettoPrice * (1.0f + vatPercent);
-        this.vatAmount = bruttoPrice - nettoPrice;
     }
 
     public Float getBruttoPrice() {
@@ -52,8 +50,6 @@ public class Car {
 
     public void setBruttoPrice(Float bruttoPrice) {
         this.bruttoPrice = bruttoPrice;
-        this.nettoPrice = bruttoPrice / (1.0f + vatPercent);
-        this.vatAmount = bruttoPrice - nettoPrice;
     }
 
     public Float getVatPercent() {
@@ -61,7 +57,7 @@ public class Car {
     }
 
     public void setVatPercent(Float vatPercent) {
-        this.vatPercent = vatPercent / 100.0f;
+        this.vatPercent = vatPercent;
     }
 
     public Float getVatAmount() {
@@ -88,19 +84,15 @@ public class Car {
             return this;
         }
         public Builder vatPercent(Float vatPercent){
-            this.vatPercent = vatPercent / 100.0f;
+            this.vatPercent = vatPercent;
             return this;
         }
         public Builder nettoPrice(Float nettoPrice){
             this.nettoPrice = nettoPrice;
-            this.bruttoPrice = nettoPrice * (1.0f + vatPercent);
-            this.vatAmount = bruttoPrice - nettoPrice;
             return this;
         }
         public Builder bruttoPrice(Float bruttoPrice){
             this.bruttoPrice = bruttoPrice;
-            this.nettoPrice = bruttoPrice / (1.0f + vatPercent);
-            this.vatAmount = bruttoPrice - nettoPrice;
             return this;
         }
         public Car build(){

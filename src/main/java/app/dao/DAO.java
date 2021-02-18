@@ -14,6 +14,8 @@ public abstract class DAO<T> {
     private Statement statement = null;
     private String query = null;
 
+    private Object generatedKey;
+
     public void save(T object) throws Exception {
         query = createSaveQuery(object);
 
@@ -23,6 +25,8 @@ public abstract class DAO<T> {
             statement = connection.createStatement();
             statement.executeUpdate(query);
 
+            generatedKey = statement.getGeneratedKeys().getObject(1);
+
             //zwolnienie zasobów i zamknięcie połączenia
             statement.close();
             connection.close();
@@ -31,6 +35,9 @@ public abstract class DAO<T> {
             e.printStackTrace();
             throw new Exception("Błąd przy zapisie do bazy");
         }
+    }
+    public Object getGeneratedKey(){
+        return generatedKey;
     }
     protected abstract String createSaveQuery(T object);
 }

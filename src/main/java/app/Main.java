@@ -6,6 +6,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import main.java.app.dao.UserDAO;
+import main.java.app.models.User;
 
 
 public class Main extends Application {

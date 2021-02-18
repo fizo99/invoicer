@@ -1,6 +1,6 @@
 package main.java.app.models;
 
-public class Subject {
+public class Buyer {
     private String NIP;
     private String fullName;
     private String fullAddress;
@@ -17,7 +17,7 @@ public class Subject {
         return fullName;
     }
 
-    public void setFullName(String name) {
+    public void setFullName(String fullName) {
         this.fullName = fullName;
     }
 
@@ -31,7 +31,7 @@ public class Subject {
 
     @Override
     public String toString() {
-        return "Subject{" +
+        return "Buyer{" +
                 "NIP='" + NIP + '\'' +
                 ", name='" + fullName + '\'' +
                 ", fullAddress='" + fullAddress + '\'' +
@@ -104,19 +104,19 @@ public class Subject {
 //        }
 
 
-        public Subject build() {
-            Subject subject = new Subject();
-            subject.NIP = NIP;
-            subject.fullName = fullName;
-            subject.fullAddress = fullAddress;
-//            subject.name = name;
-//            subject.surname = surname;
-//            subject.companyName = companyName;
-//            subject.town = town;
-//            subject.streetName = streetName;
-//            subject.streetNumber = streetNumber;
-//            subject.ZIPcode = ZIPcode;
-            return subject;
+        public Buyer build() {
+            Buyer buyer = new Buyer();
+            buyer.NIP = NIP;
+            buyer.fullName = fullName;
+            buyer.fullAddress = fullAddress;
+//            buyer.name = name;
+//            buyer.surname = surname;
+//            buyer.companyName = companyName;
+//            buyer.town = town;
+//            buyer.streetName = streetName;
+//            buyer.streetNumber = streetNumber;
+//            buyer.ZIPcode = ZIPcode;
+            return buyer;
         }
     }
 }
