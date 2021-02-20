@@ -13,7 +13,8 @@ import java.util.ResourceBundle;
 
 public class SettingsController implements Initializable {
     @FXML
-    JFXTextField userFullName, userFullAddress,
+    JFXTextField userFullName, userZIPCode,
+                 userTown,userStreet,userStreetNumber,
                  userNIP, userPhoneNumber,
                  userEmail, userBDO, userGTU,
                  userAccountNumber;
@@ -29,7 +30,11 @@ public class SettingsController implements Initializable {
 
         buttonSettingsSave.setOnAction(e -> {
             String fullName = userFullName.getText();
-            String fullAddress = userFullAddress.getText();
+            String town = userTown.getText();
+            String street = userStreet.getText();
+            String streetNumber = userStreetNumber.getText();
+            String ZIPCode = userZIPCode.getText();
+            //String fullAddress = userFullAddress.getText();
             String NIP = userNIP.getText();
             String phoneNumber = userPhoneNumber.getText();
             String email = userEmail.getText();
@@ -39,7 +44,11 @@ public class SettingsController implements Initializable {
 
             User user = new User.Builder()
                     .fullName(fullName)
-                    .fullAddress(fullAddress)
+                    //.fullAddress(fullAddress)
+                    .town(town)
+                    .street(street)
+                    .streetNumber(streetNumber)
+                    .ZIPCode(ZIPCode)
                     .NIP(NIP)
                     .phoneNumber(phoneNumber)
                     .email(email)

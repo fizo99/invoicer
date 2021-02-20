@@ -20,6 +20,7 @@ import main.java.app.models.Buyer;
 import main.java.app.models.Car;
 import main.java.app.models.Invoice;
 import main.java.app.util.FetchNIP;
+import main.java.app.util.PDFCreator;
 
 import java.beans.IndexedPropertyDescriptor;
 import java.math.BigInteger;
@@ -31,9 +32,18 @@ import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.util.*;
 
+
+//TODO
+    //RECREATE DB SCHEMA
+    //MAKE NEW classDAOS
+//
+
+
 public class New implements Initializable {
     @FXML
     private JFXDatePicker formDate;
+    @FXML
+    private JFXTextField formPlace;
     @FXML
     private JFXTextField formInvoiceNumber;
     @FXML
@@ -41,12 +51,17 @@ public class New implements Initializable {
 
     //buyer data fields
     @FXML
-    private JFXTextField formBuyerNIP,formBuyerFullName,formBuyerFullAddress;
-
+    private JFXTextField formBuyerNIP,formBuyerFullName,
+                         formBuyerTown,formBuyerStreet,
+                         formBuyerStreetNumber,formBuyerZIPCode;
     //car data fields
     @FXML
-    private JFXTextField formCarVIN,formCarDescription,formCarNettoPrice,
+    private JFXTextField formCarVIN,formCarBrand,formCarModel,
+            formCarYear, formCarDescription,formCarNettoPrice,
             formCarVatPercent, formCarVatAmount, formCarBruttoPrice;
+
+    @FXML
+    private JFXTextField formAdditionalInformation;
 
     //buttons
     @FXML
@@ -54,12 +69,18 @@ public class New implements Initializable {
     @FXML
     private JFXButton buttonFind;
 
+    @FXML
+    private JFXComboBox<String> formPaymentMethod;
 
     private LocalDate date;
-    private Integer invoiceNumber;
+    private String invoicePlace;
+    private String invoiceNumber;
     private Invoice.Type invoiceType;
 
-    private final Buyer buyer = new Buyer();
+    private String additionalInformation;
+    private Invoice.PaymentMethod paymentMethod;
+
+    private Buyer buyer = new Buyer();
     private final Car car = new Car();
 
     private final DecimalFormat formatter = new DecimalFormat(
@@ -67,9 +88,13 @@ public class New implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        ObservableList<String> listLeagues = FXCollections.observableArrayList(
+        ObservableList<String> invoiceTypes = FXCollections.observableArrayList(
                 "VAT", "VAT_MARZA", "PROFORMA", "KOREKTA");
-        formInvoiceType.setItems(listLeagues);
+        formInvoiceType.setItems(invoiceTypes);
+
+        ObservableList<String> paymentMethods = FXCollections.observableArrayList(
+                "PRZELEW", "GOTOWKA");
+        formPaymentMethod.setItems(paymentMethods);
 
         //set validators
         formCarNettoPrice.setValidators(priceFieldValidator());
@@ -77,31 +102,42 @@ public class New implements Initializable {
 
         //action handlers
         formDate.setOnAction(dateOnChange());
+        formPlace.textProperty().addListener(placeOnChange());
         formInvoiceType.setOnAction(typeOnChange());
         formInvoiceNumber.textProperty().addListener(invoiceNumberOnChange());
 
         formBuyerNIP.textProperty().addListener(buyerNIPOnChange());
         formBuyerFullName.textProperty().addListener(buyerFullNameOnChange());
-        formBuyerFullAddress.textProperty().addListener(buyerFullAddressOnChange());
+        formBuyerTown.textProperty().addListener(buyerTownOnChange());
+        formBuyerStreet.textProperty().addListener(buyerStreetOnChange());
+        formBuyerStreetNumber.textProperty().addListener(buyerStreetNumberOnChange());
+        formBuyerZIPCode.textProperty().addListener(buyerZIPOnChange());
+        //formBuyerFullAddress.textProperty().addListener(buyerFullAddressOnChange());
 
         formCarVIN.textProperty().addListener(carVinOnChange());
+        formCarBrand.textProperty().addListener(carBrandOnChange());
+        formCarModel.textProperty().addListener(carModelOnChange());
+        formCarYear.textProperty().addListener(carYearOnChange());
         formCarDescription.textProperty().addListener(carDescriptionOnChange());
+
+        formAdditionalInformation.textProperty().addListener(additionalInformationOnChange());
         formCarNettoPrice.textProperty().addListener(carNettoPriceOnChange());
+        formPaymentMethod.setOnAction(paymentMethodOnChange());
 
         //TODO
         buttonFind.setOnAction(e -> {
             LocalDate date = LocalDate.now();
             String NIP = formBuyerNIP.getText();
             try {
-                Buyer newBuyer = FetchNIP.makeRequest(NIP,date.toString());
-
-                buyer.setNIP(newBuyer.getNIP());
-                buyer.setFullName(newBuyer.getFullName());
-                buyer.setFullAddress(newBuyer.getFullAddress());
+                buyer = FetchNIP.makeRequest(NIP,date.toString());
 
                 formBuyerNIP.setText(buyer.getNIP());
                 formBuyerFullName.setText(buyer.getFullName());
-                formBuyerFullAddress.setText(buyer.getFullAddress());
+                formBuyerTown.setText(buyer.getTown());
+                formBuyerStreet.setText(buyer.getStreet());
+                formBuyerStreetNumber.setText(buyer.getStreetNumber());
+                formBuyerZIPCode.setText(buyer.getZIPCode());
+
             } catch (Exception exc) {
                 System.out.println(exc.getMessage());
                 //exc.printStackTrace();
@@ -114,35 +150,41 @@ public class New implements Initializable {
             invoice.setCar(car);
             invoice.setInvoiceType(invoiceType);
             invoice.setInvoiceNumber(invoiceNumber);
+            invoice.setPlace(invoicePlace);
+            invoice.setAdditionalInformation(additionalInformation);
+            invoice.setPaymentMethod(paymentMethod);
 
+            PDFCreator pdfCreator = new PDFCreator("test.pdf",invoice);
+            pdfCreator.save();
+            System.out.println(invoice);
             //save car to DB
-            CarDAO carDAO = new CarDAO();
-            try {
-                carDAO.save(car);
-            } catch (Exception exception) {
-                System.out.println("blad dodawania samochodu");
-                exception.printStackTrace();
-            }
-
-            //save buyer to DB
-            BuyerDAO buyerDAO = new BuyerDAO();
-            try {
-                buyerDAO.save(buyer);
-            } catch (Exception exception) {
-                System.out.println("blad dodawania kupujacego");
-                exception.printStackTrace();
-            }
-
-            invoice.setBuyerID((Integer) buyerDAO.getGeneratedKey());
-
-            //save invoice to DB
-            InvoiceDAO invoiceDAO = new InvoiceDAO();
-            try {
-                invoiceDAO.save(invoice);
-            } catch (Exception exception) {
-                System.out.println("blad dodawania faktury");
-                exception.printStackTrace();
-            }
+//            CarDAO carDAO = new CarDAO();
+//            try {
+//                carDAO.save(car);
+//            } catch (Exception exception) {
+//                System.out.println("blad dodawania samochodu");
+//                exception.printStackTrace();
+//            }
+//
+//            //save buyer to DB
+//            BuyerDAO buyerDAO = new BuyerDAO();
+//            try {
+//                buyerDAO.save(buyer);
+//            } catch (Exception exception) {
+//                System.out.println("blad dodawania kupujacego");
+//                exception.printStackTrace();
+//            }
+//
+//            invoice.setBuyerID((Integer) buyerDAO.getGeneratedKey());
+//
+//            //save invoice to DB
+//            InvoiceDAO invoiceDAO = new InvoiceDAO();
+//            try {
+//                invoiceDAO.save(invoice);
+//            } catch (Exception exception) {
+//                System.out.println("blad dodawania faktury");
+//                exception.printStackTrace();
+//            }
             //create pdf
 
             //print pdf
@@ -159,12 +201,22 @@ public class New implements Initializable {
             }
         };
     }
+    private ChangeListener<String> placeOnChange() {
+        return new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                if (formPlace.validate()) {
+                    invoicePlace = newValue;
+                }
+            }
+        };
+    }
     private ChangeListener<String> invoiceNumberOnChange() {
         return new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 if (formInvoiceNumber.validate()) {
-                    invoiceNumber = Integer.parseInt(newValue);
+                    invoiceNumber = newValue;
                 }
             }
         };
@@ -179,6 +231,15 @@ public class New implements Initializable {
                 }else{
                     formCarVatPercent.setText("23");
                 }
+            }
+        };
+    }
+
+    private EventHandler<ActionEvent> paymentMethodOnChange(){
+        return new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                paymentMethod = Invoice.PaymentMethod.valueOf(formPaymentMethod.getValue());
             }
         };
     }
@@ -199,20 +260,72 @@ public class New implements Initializable {
             }
         };
     }
-    private ChangeListener<String> buyerFullAddressOnChange() {
+    private ChangeListener<String> buyerTownOnChange() {
         return new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                buyer.setFullAddress(newValue);
+                buyer.setTown(newValue);
             }
         };
     }
+    private ChangeListener<String> buyerStreetOnChange() {
+        return new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                //SET FULL ADDRESS
+                buyer.setStreet(newValue);
+            }
+        };
+    }
+    private ChangeListener<String> buyerStreetNumberOnChange() {
+        return new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                buyer.setStreetNumber(newValue);
+            }
+        };
+    }
+    private ChangeListener<String> buyerZIPOnChange() {
+        return new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                buyer.setZIPCode(newValue);
+            }
+        };
+    }
+
 
     private ChangeListener<String> carVinOnChange() {
         return new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 car.setVIN(newValue);
+            }
+        };
+    }
+    private ChangeListener<String> carBrandOnChange() {
+        return new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                car.setBrand(newValue);
+            }
+        };
+    }
+    private ChangeListener<String> carModelOnChange() {
+        return new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                car.setModel(newValue);
+            }
+        };
+    }
+    private ChangeListener<String> carYearOnChange() {
+        return new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                if(formCarYear.validate()){
+                    car.setYear(Integer.parseInt(newValue));
+                }
             }
         };
     }
@@ -260,6 +373,16 @@ public class New implements Initializable {
         };
     }
 
+    private ChangeListener<String> additionalInformationOnChange(){
+        return new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                additionalInformation = newValue;
+            }
+        };
+    }
+
+
 
     //validators
 
@@ -268,69 +391,6 @@ public class New implements Initializable {
         validator.setRegexPattern("^\\s*(?=.*[0-9])\\d*(?:\\.\\d{1,2})?\\s*$");
         validator.setMessage("Zła wartość");
         return validator;
-    }
-
-    private void initializeForm() {
-//        RegexValidator validator = priceFieldValidator();
-//
-//        formNettoPrice.getValidators().add(validator);
-//        formBruttoPrice.getValidators().add(validator);
-//        formVatAmount.getValidators().add(validator);
-//
-//        formNettoPrice.textProperty().addListener((observable, oldValue, newValue) -> {
-//            if(!formNettoPrice.validate()) return;
-//
-//            Float netto;
-//            Float brutto = null;
-//            Float vatAmount = null;
-//            Float vatPercent;
-//
-//
-//            if(invoiceType == Invoice.Type.VAT){
-//                netto = Float.parseFloat(newValue);
-//                vatPercent = Float.parseFloat(formVatPercent.getText());
-//                brutto = netto * (1.0f + vatPercent / 100.0f);
-//                vatAmount = brutto - netto;
-//            }else if (invoiceType == Invoice.Type.VAT_MARZA){
-//                netto = Float.parseFloat(newValue);
-//                vatAmount = 0.0f;
-//                brutto = netto;
-//
-//                formVatPercent.setText("0");
-//            }
-//
-//            formBruttoPrice.setText(String.format("%.0f", brutto));
-//            formVatAmount.setText(String.format("%.0f", vatAmount));
-//        });
-//
-//        formVatPercent.setEditable(false);
-//        formVatAmount.setEditable(false);
-    }
-
-    private void initializeBuyerForm(){
-
-    }
-
-    private void initializeTypeField(){
-//        ObservableList<String> listLeagues = FXCollections.observableArrayList("VAT", "VAT_MARZA", "PROFORMA", "KOREKTA");
-//        invoiceTypeField.setItems(listLeagues);
-//        invoiceTypeField.setOnAction(e -> {
-//            switch(invoiceTypeField.getValue()){
-//                case "VAT":
-//                    invoiceType = Invoice.Type.VAT;
-//                    formVatPercent.setText("23");
-//                    break;
-//                case "VAT_MARZA":
-//                    invoiceType = Invoice.Type.VAT_MARZA;
-//                    break;
-//                case "PROFORMA":
-//                    invoiceType = Invoice.Type.PROFORMA;
-//                    break;
-//                case "KOREKTA":
-//                    invoiceType = Invoice.Type.KOREKTA;
-//                    break;
-//            }
-//        });
     }
 
 

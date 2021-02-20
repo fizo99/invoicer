@@ -34,40 +34,58 @@
                      <children>
                         <JFXTextField fx:id="userFullName" minWidth="400.0" promptText="NIP" text="Nazwa">
                            <VBox.margin>
-                              <Insets top="10.0" />
+                              <Insets />
                            </VBox.margin>
                         </JFXTextField>
-                        <JFXTextField fx:id="userFullAddress" minWidth="400.0" promptText="Nazwa" text="Adres">
+                        <JFXTextField fx:id="userTown" minWidth="400.0" promptText="Miejscowość">
                            <VBox.margin>
                               <Insets top="15.0" />
                            </VBox.margin>
                         </JFXTextField>
-                        <JFXTextField fx:id="userNIP" minWidth="400.0" promptText="Adres" text="NIP">
+                        <HBox maxWidth="400.0">
+                           <children>
+                              <JFXTextField fx:id="userStreet" minWidth="300.0" promptText="Ulica" />
+                              <JFXTextField fx:id="userStreetNumber" minWidth="80.0" promptText="nr">
+                                 <HBox.margin>
+                                    <Insets left="20.0" />
+                                 </HBox.margin>
+                              </JFXTextField>
+                           </children>
+                           <VBox.margin>
+                              <Insets top="15.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <JFXTextField fx:id="userZIPCode" minWidth="400.0" promptText="Kod pocztowy">
                            <VBox.margin>
                               <Insets top="15.0" />
                            </VBox.margin>
                         </JFXTextField>
-                        <JFXTextField fx:id="userPhoneNumber" minWidth="400.0" promptText="Adres" text="Numer telefonu">
+                        <JFXTextField fx:id="userNIP" minWidth="400.0" promptText="NIP">
                            <VBox.margin>
                               <Insets top="15.0" />
                            </VBox.margin>
                         </JFXTextField>
-                        <JFXTextField fx:id="userEmail" minWidth="400.0" promptText="Adres" text="Email">
+                        <JFXTextField fx:id="userPhoneNumber" minWidth="400.0" promptText="Numer telefonu">
                            <VBox.margin>
                               <Insets top="15.0" />
                            </VBox.margin>
                         </JFXTextField>
-                        <JFXTextField fx:id="userBDO" minWidth="400.0" promptText="Adres" text="BDO">
+                        <JFXTextField fx:id="userEmail" minWidth="400.0" promptText="Email">
                            <VBox.margin>
                               <Insets top="15.0" />
                            </VBox.margin>
                         </JFXTextField>
-                        <JFXTextField fx:id="userGTU" minWidth="400.0" promptText="Adres" text="GTU">
+                        <JFXTextField fx:id="userBDO" minWidth="400.0" promptText="BDO">
                            <VBox.margin>
                               <Insets top="15.0" />
                            </VBox.margin>
                         </JFXTextField>
-                        <JFXTextField fx:id="userAccountNumber" minWidth="400.0" promptText="Adres" text="Numer konta bankowego">
+                        <JFXTextField fx:id="userGTU" minWidth="400.0" promptText="GTU">
+                           <VBox.margin>
+                              <Insets top="15.0" />
+                           </VBox.margin>
+                        </JFXTextField>
+                        <JFXTextField fx:id="userAccountNumber" minWidth="400.0" promptText="Numer konta bankowego">
                            <VBox.margin>
                               <Insets top="15.0" />
                            </VBox.margin>

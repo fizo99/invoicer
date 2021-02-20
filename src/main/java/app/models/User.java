@@ -2,7 +2,11 @@ package main.java.app.models;
 
 public class User{
     private String fullName;
-    private String fullAddress;
+    //private String fullAddress;
+    private String town;
+    private String street;
+    private String streetNumber;
+    private String ZIPCode;
     private String NIP;
     private String phoneNumber;
     private String email;
@@ -18,13 +22,13 @@ public class User{
         this.fullName = fullName;
     }
 
-    public String getFullAddress() {
-        return fullAddress;
-    }
+    //public String getFullAddress() {
+    //        return fullAddress;
+    //}
 
-    public void setFullAddress(String fullAddress) {
-        this.fullAddress = fullAddress;
-    }
+    //public void setFullAddress(String fullAddress) {
+    //    this.fullAddress = fullAddress;
+    //}
 
     public String getNIP() {
         return NIP;
@@ -74,9 +78,45 @@ public class User{
         this.accountNumber = accountNumber;
     }
 
+    public String getTown() {
+        return town;
+    }
+
+    public void setTown(String town) {
+        this.town = town;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public String getStreetNumber() {
+        return streetNumber;
+    }
+
+    public void setStreetNumber(String streetNumber) {
+        this.streetNumber = streetNumber;
+    }
+
+    public String getZIPCode() {
+        return ZIPCode;
+    }
+
+    public void setZIPCode(String ZIPCode) {
+        this.ZIPCode = ZIPCode;
+    }
+
     public static class Builder {
         private String fullName;
-        private String fullAddress;
+        //private String fullAddress;
+        private String town;
+        private String street;
+        private String streetNumber;
+        private String ZIPCode;
         private String NIP;
         private String phoneNumber;
         private String email;
@@ -88,11 +128,27 @@ public class User{
             this.fullName = fullName;
             return this;
         }
-
-        public Builder fullAddress(String fullAddress){
-            this.fullAddress = fullAddress;
+        public Builder town(String town){
+            this.town = town;
             return this;
         }
+        public Builder street(String street){
+            this.street = street;
+            return this;
+        }
+        public Builder streetNumber(String streetNumber){
+            this.streetNumber = streetNumber;
+            return this;
+        }
+        public Builder ZIPCode(String ZIPCode){
+            this.ZIPCode = ZIPCode;
+            return this;
+        }
+
+//        public Builder fullAddress(String fullAddress){
+//            this.fullAddress = fullAddress;
+//            return this;
+//        }
 
         public Builder NIP(String NIP){
             this.NIP = NIP;
@@ -122,7 +178,11 @@ public class User{
         public User build(){
             User user = new User();
             user.fullName = this.fullName;
-            user.fullAddress = this.fullAddress;
+            user.town = this.town;
+            user.street = this.street;
+            user.streetNumber = this.streetNumber;
+            user.ZIPCode = this.ZIPCode;
+            //user.fullAddress = this.fullAddress;
             user.NIP = this.NIP;
             user.phoneNumber = this.phoneNumber;
             user.email = this.email;

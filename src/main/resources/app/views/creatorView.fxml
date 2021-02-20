@@ -36,17 +36,25 @@
                      <children>
                         <VBox fillWidth="false">
                            <children>
-                              <JFXDatePicker promptText="Data" />
-                              <JFXTextField promptText="nr">
+                              <HBox>
+                                 <children>
+                                    <JFXComboBox fx:id="formInvoiceType" nodeOrientation="LEFT_TO_RIGHT" promptText="Faktura" HBox.hgrow="ALWAYS" />
+                                    <JFXTextField fx:id="formInvoiceNumber" maxWidth="60.0" promptText="nr">
+                                       <HBox.margin>
+                                          <Insets left="10.0" />
+                                       </HBox.margin>
+                                    </JFXTextField>
+                                 </children>
+                              </HBox>
+                              <JFXDatePicker fx:id="formDate" promptText="Data">
+                                 <VBox.margin>
+                                    <Insets top="10.0" />
+                                 </VBox.margin></JFXDatePicker>
+                              <JFXTextField fx:id="formPlace" promptText="Miejscowość">
                                  <VBox.margin>
                                     <Insets top="10.0" />
                                  </VBox.margin>
                               </JFXTextField>
-                              <JFXComboBox fx:id="invoiceType" promptText="Faktura">
-                                 <VBox.margin>
-                                    <Insets top="10.0" />
-                                 </VBox.margin>
-                              </JFXComboBox>
                            </children>
                         </VBox>
                         <HBox>
@@ -58,17 +66,35 @@
                                           <Font name="System Bold" size="20.0" />
                                        </font>
                                     </Label>
-                                    <JFXTextField fx:id="formNIP" minWidth="400.0" promptText="NIP">
+                                    <JFXTextField fx:id="formBuyerNIP" minWidth="400.0" promptText="NIP">
                                        <VBox.margin>
                                           <Insets top="10.0" />
                                        </VBox.margin>
                                     </JFXTextField>
-                                    <JFXTextField fx:id="formFullName" minWidth="400.0" promptText="Nazwa">
+                                    <JFXTextField fx:id="formBuyerFullName" minWidth="400.0" promptText="Nazwa">
                                        <VBox.margin>
                                           <Insets top="10.0" />
                                        </VBox.margin>
                                     </JFXTextField>
-                                    <JFXTextField fx:id="formFullAddress" minWidth="400.0" promptText="Adres">
+                                    <JFXTextField fx:id="formBuyerTown" minWidth="400.0" promptText="Miejscowość">
+                                       <VBox.margin>
+                                          <Insets top="10.0" />
+                                       </VBox.margin>
+                                    </JFXTextField>
+                                    <HBox maxWidth="400.0">
+                                       <children>
+                                          <JFXTextField fx:id="formBuyerStreet" minWidth="300.0" promptText="Ulica" />
+                                          <JFXTextField fx:id="formBuyerStreetNumber" minWidth="80.0" promptText="nr">
+                                             <HBox.margin>
+                                                <Insets left="20.0" />
+                                             </HBox.margin>
+                                          </JFXTextField>
+                                       </children>
+                                       <VBox.margin>
+                                          <Insets top="10.0" />
+                                       </VBox.margin>
+                                    </HBox>
+                                    <JFXTextField fx:id="formBuyerZIPCode" minWidth="400.0" promptText="Kod pocztowy">
                                        <VBox.margin>
                                           <Insets top="10.0" />
                                        </VBox.margin>
@@ -82,7 +108,7 @@
                               </JFXButton>
                            </children>
                            <VBox.margin>
-                              <Insets top="50.0" />
+                              <Insets top="30.0" />
                            </VBox.margin>
                         </HBox>
                      </children>
@@ -97,126 +123,193 @@
                         <Font name="System Bold" size="20.0" />
                      </font>
                   </Label>
-                  <HBox prefHeight="100.0" prefWidth="200.0">
+                  <VBox>
                      <children>
-                        <VBox HBox.hgrow="ALWAYS">
+                        <HBox>
                            <children>
-                              <Label text="VIN">
-                                 <font>
-                                    <Font name="System Bold" size="15.0" />
-                                 </font>
-                              </Label>
-                              <JFXTextField fx:id="formVIN">
-                                 <VBox.margin>
-                                    <Insets top="10.0" />
-                                 </VBox.margin>
-                              </JFXTextField>
+                              <VBox HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <Label text="VIN">
+                                       <font>
+                                          <Font name="System Bold" size="15.0" />
+                                       </font>
+                                    </Label>
+                                    <JFXTextField fx:id="formCarVIN" />
+                                 </children>
+                              </VBox>
+                              <VBox HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <Label text="Marka">
+                                       <font>
+                                          <Font name="System Bold" size="15.0" />
+                                       </font>
+                                    </Label>
+                                    <JFXTextField fx:id="formCarBrand" />
+                                 </children>
+                                 <HBox.margin>
+                                    <Insets left="10.0" />
+                                 </HBox.margin>
+                              </VBox>
+                              <VBox HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <Label text="Model">
+                                       <font>
+                                          <Font name="System Bold" size="15.0" />
+                                       </font>
+                                    </Label>
+                                    <JFXTextField fx:id="formCarModel" />
+                                 </children>
+                                 <HBox.margin>
+                                    <Insets left="10.0" />
+                                 </HBox.margin>
+                              </VBox>
+                              <VBox HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <Label text="Rocznik">
+                                       <font>
+                                          <Font name="System Bold" size="15.0" />
+                                       </font>
+                                    </Label>
+                                    <JFXTextField fx:id="formCarYear" />
+                                 </children>
+                                 <HBox.margin>
+                                    <Insets left="10.0" />
+                                 </HBox.margin>
+                              </VBox>
+                              <VBox HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <Label text="Dodatkowy opis">
+                                       <font>
+                                          <Font name="System Bold" size="15.0" />
+                                       </font>
+                                    </Label>
+                                    <JFXTextField fx:id="formCarDescription" />
+                                 </children>
+                                 <HBox.margin>
+                                    <Insets left="10.0" />
+                                 </HBox.margin>
+                              </VBox>
                            </children>
-                           <HBox.margin>
-                              <Insets right="10.0" />
-                           </HBox.margin>
-                        </VBox>
-                        <VBox HBox.hgrow="ALWAYS">
+                        </HBox>
+                        <HBox>
                            <children>
-                              <Label text="Opis">
-                                 <font>
-                                    <Font name="System Bold" size="15.0" />
-                                 </font>
-                              </Label>
-                              <JFXTextField fx:id="formDescription">
-                                 <VBox.margin>
-                                    <Insets top="10.0" />
-                                 </VBox.margin>
-                              </JFXTextField>
+                              <VBox HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <Label text="Cena Netto [zł]">
+                                       <font>
+                                          <Font name="System Bold" size="15.0" />
+                                       </font>
+                                    </Label>
+                                    <JFXTextField fx:id="formCarNettoPrice">
+                                       <VBox.margin>
+                                          <Insets top="10.0" />
+                                       </VBox.margin>
+                                    </JFXTextField>
+                                 </children>
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
+                              </VBox>
+                              <VBox HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <Label text="VAT [%]">
+                                       <font>
+                                          <Font name="System Bold" size="15.0" />
+                                       </font>
+                                    </Label>
+                                    <JFXTextField fx:id="formCarVatPercent" text="23">
+                                       <VBox.margin>
+                                          <Insets top="10.0" />
+                                       </VBox.margin>
+                                    </JFXTextField>
+                                 </children>
+                                 <HBox.margin>
+                                    <Insets left="10.0" />
+                                 </HBox.margin>
+                              </VBox>
+                              <VBox HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <Label text="Ilość VAT [zł]">
+                                       <font>
+                                          <Font name="System Bold" size="15.0" />
+                                       </font>
+                                    </Label>
+                                    <JFXTextField fx:id="formCarVatAmount">
+                                       <VBox.margin>
+                                          <Insets top="10.0" />
+                                       </VBox.margin>
+                                    </JFXTextField>
+                                 </children>
+                                 <HBox.margin>
+                                    <Insets left="10.0" />
+                                 </HBox.margin>
+                              </VBox>
+                              <VBox HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <Label text="Cena Brutto [zł]">
+                                       <font>
+                                          <Font name="System Bold" size="15.0" />
+                                       </font>
+                                    </Label>
+                                    <JFXTextField fx:id="formCarBruttoPrice">
+                                       <VBox.margin>
+                                          <Insets top="10.0" />
+                                       </VBox.margin>
+                                    </JFXTextField>
+                                 </children>
+                                 <HBox.margin>
+                                    <Insets left="10.0" />
+                                 </HBox.margin>
+                              </VBox>
+                              <VBox disable="true" layoutX="547.0" layoutY="10.0" opacity="0.0" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <Label text="Cena Brutto [zł]">
+                                       <font>
+                                          <Font name="System Bold" size="15.0" />
+                                       </font>
+                                    </Label>
+                                    <JFXTextField>
+                                       <VBox.margin>
+                                          <Insets top="10.0" />
+                                       </VBox.margin>
+                                    </JFXTextField>
+                                 </children>
+                                 <HBox.margin>
+                                    <Insets left="10.0" />
+                                 </HBox.margin>
+                              </VBox>
                            </children>
-                           <HBox.margin>
-                              <Insets right="10.0" />
-                           </HBox.margin>
-                        </VBox>
-                        <VBox HBox.hgrow="ALWAYS">
-                           <children>
-                              <Label text="Cena Netto [zł]">
-                                 <font>
-                                    <Font name="System Bold" size="15.0" />
-                                 </font>
-                              </Label>
-                              <JFXTextField fx:id="formNettoPrice">
-                                 <VBox.margin>
-                                    <Insets top="10.0" />
-                                 </VBox.margin>
-                              </JFXTextField>
-                           </children>
-                           <HBox.margin>
-                              <Insets right="10.0" />
-                           </HBox.margin>
-                        </VBox>
-                        <VBox HBox.hgrow="ALWAYS">
-                           <children>
-                              <Label text="VAT [%]">
-                                 <font>
-                                    <Font name="System Bold" size="15.0" />
-                                 </font>
-                              </Label>
-                              <JFXTextField fx:id="formVatPercent" text="23">
-                                 <VBox.margin>
-                                    <Insets top="10.0" />
-                                 </VBox.margin>
-                              </JFXTextField>
-                           </children>
-                           <HBox.margin>
-                              <Insets right="10.0" />
-                           </HBox.margin>
-                        </VBox>
-                        <VBox HBox.hgrow="ALWAYS">
-                           <children>
-                              <Label text="Ilość VAT [zł]">
-                                 <font>
-                                    <Font name="System Bold" size="15.0" />
-                                 </font>
-                              </Label>
-                              <JFXTextField fx:id="formVatAmount">
-                                 <VBox.margin>
-                                    <Insets top="10.0" />
-                                 </VBox.margin>
-                              </JFXTextField>
-                           </children>
-                           <HBox.margin>
-                              <Insets right="10.0" />
-                           </HBox.margin>
-                        </VBox>
-                        <VBox HBox.hgrow="ALWAYS">
-                           <children>
-                              <Label text="Cena Brutto [zł]">
-                                 <font>
-                                    <Font name="System Bold" size="15.0" />
-                                 </font>
-                              </Label>
-                              <JFXTextField fx:id="formBruttoPrice">
-                                 <VBox.margin>
-                                    <Insets top="10.0" />
-                                 </VBox.margin>
-                              </JFXTextField>
-                           </children>
-                           <HBox.margin>
-                              <Insets right="10.0" />
-                           </HBox.margin>
-                        </VBox>
+                           <VBox.margin>
+                              <Insets top="20.0" />
+                           </VBox.margin>
+                        </HBox>
                      </children>
                      <VBox.margin>
                         <Insets top="20.0" />
                      </VBox.margin>
-                  </HBox>
+                  </VBox>
                   <HBox alignment="TOP_RIGHT" prefHeight="100.0" prefWidth="200.0">
                      <children>
+                        <JFXComboBox fx:id="formPaymentMethod" nodeOrientation="LEFT_TO_RIGHT" promptText="Typ płatności">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </JFXComboBox>
+                        <JFXTextField fx:id="formAdditionalInformation" prefHeight="31.0" prefWidth="239.0" promptText="Dodatkowe uwagi">
+                           <HBox.margin>
+                              <Insets left="20.0" />
+                           </HBox.margin>
+                        </JFXTextField>
+                        <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
                         <JFXButton fx:id="buttonSave" alignment="CENTER" contentDisplay="CENTER" style="-fx-background-color: #f44336;" text="Zapisz i drukuj" />
                      </children>
                      <VBox.margin>
-                        <Insets right="10.0" top="80.0" />
+                        <Insets top="100.0" />
                      </VBox.margin>
                   </HBox>
                </children>
                <VBox.margin>
-                  <Insets top="50.0" />
+                  <Insets top="30.0" />
                </VBox.margin>
             </VBox>
          </children>

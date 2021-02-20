@@ -1,18 +1,18 @@
 package main.java.app.util;
 
+import main.java.app.models.Buyer;
 import org.json.*;
-import main.java.app.models.Subject;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Arrays;
 
 public class FetchNIP {
     private static final String requestAddress = "https://wl-api.mf.gov.pl/api/search/nip/";
 
-    public static Subject makeRequest(String NIP, String date) throws Exception {
+    public static Buyer makeRequest(String NIP, String date) throws Exception {
             StringBuilder address = new StringBuilder(requestAddress).append(NIP)
                     .append("?date=")
                     .append(date);
@@ -49,10 +49,24 @@ public class FetchNIP {
                 fullAddress = (String)subject.get("residenceAddress");
             }
 
-            Subject buyer = new Subject.Builder()
+            String[] temp = fullAddress.split(",");
+            String[] fullStreet = temp[0].split(" ");
+            String[] zipAndTown = temp[1].split(" ");
+
+            String street = String.join(" ", Arrays.copyOfRange(fullStreet, 0, fullStreet.length - 1));
+            String streetNumber = fullStreet[fullStreet.length - 1];
+
+            String ZIP = zipAndTown[1];
+            String town = String.join(" ", Arrays.copyOfRange(zipAndTown, 2, zipAndTown.length));
+
+
+            Buyer buyer = new Buyer.Builder()
                     .NIP((String) subject.get("nip"))
+                    .street(street)
+                    .streetNumber(streetNumber)
+                    .ZIPcode(ZIP)
+                    .town(town)
                     .fullName(fullName)
-                    .fullAddress(fullAddress)
                     .build();
 
             in.close();

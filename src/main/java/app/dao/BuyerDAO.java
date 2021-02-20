@@ -7,10 +7,13 @@ public class BuyerDAO extends DAO<Buyer>{
     protected String createSaveQuery(Buyer buyer) {
         return String
                 .format("INSERT INTO " +
-                                "Buyer (NIP, fullName, fullAddress) " +
-                                "VALUES (\"%s\",\"%s\",\"%s\"); ",
+                                "Buyer (NIP, fullName, street, streetNumber, town, ZIPCode) " +
+                                "VALUES (\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\"); ",
                         buyer.getNIP(),
                         buyer.getFullName(),
-                        buyer.getFullAddress());
+                        buyer.getStreet(),
+                        buyer.getStreetNumber(),
+                        buyer.getTown(),
+                        buyer.getZIPCode());
     }
 }

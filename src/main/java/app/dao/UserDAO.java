@@ -8,10 +8,13 @@ public class UserDAO extends DAO<User>{
     protected String createSaveQuery(User user) {
         return String
                 .format("INSERT INTO " +
-                        "User (fullName, fullAddress, NIP, phoneNumber, email, BDO, GTU, accountNumber) " +
-                        "VALUES (\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\"); ",
+                        "User (fullName, town,street,streetNumber,ZIPCode, NIP, phoneNumber, email, BDO, GTU, accountNumber) " +
+                        "VALUES (\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\"); ",
                         user.getFullName(),
-                        user.getFullAddress(),
+                        user.getTown(),
+                        user.getStreet(),
+                        user.getStreetNumber(),
+                        user.getZIPCode(),
                         user.getNIP(),
                         user.getPhoneNumber(),
                         user.getEmail(),
